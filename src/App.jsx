@@ -9,21 +9,21 @@ import {
 
 // ─── THEME ────────────────────────────────────────────────────────────────────
 const T = {
-  bg:      "#05050a",
-  surface: "#0c0c14",
-  border:  "#16162a",
-  border2: "#1e1e30",
-  accent:  "#7c6af7",
-  accent2: "#a78bfa",
-  green:   "#34d399",
-  red:     "#f87171",
-  yellow:  "#fbbf24",
-  text:    "#e0e0f0",
-  muted:   "#4a4a6a",
-  dim:     "#1e1e30",
+  bg:      "#f4f5f7",
+  surface: "#ffffff",
+  border:  "#e4e6ed",
+  border2: "#d0d4df",
+  accent:  "#4f46e5",
+  accent2: "#818cf8",
+  green:   "#059669",
+  red:     "#dc2626",
+  yellow:  "#d97706",
+  text:    "#111827",
+  muted:   "#6b7280",
+  dim:     "#e5e7eb",
 };
 
-const PIE_COLORS = ["#7c6af7","#34d399","#fbbf24","#f87171","#38bdf8","#fb923c","#a78bfa","#60d394","#f472b6","#22d3ee","#818cf8","#ec4899","#10b981","#6366f1","#e8c547","#c084fc"];
+const PIE_COLORS = ["#4f46e5","#059669","#d97706","#dc2626","#0284c7","#ea580c","#7c3aed","#0d9488","#db2777","#0369a1","#65a30d","#9333ea","#16a34a","#c2410c","#b45309","#0891b2"];
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 const clr    = (n) => n > 0 ? T.green : n < 0 ? T.red : T.muted;
@@ -126,7 +126,7 @@ const Input = ({ label, type="text", value, onChange, error, placeholder, autoFo
         border:`1px solid ${error ? T.red : T.border2}`,
         borderRadius:8, color:T.text, fontSize:14, outline:"none",
         fontFamily:"'Syne',sans-serif", boxSizing:"border-box",
-        transition:"border 0.2s",
+        transition:"border 0.2s", boxShadow:"0 1px 3px rgba(0,0,0,0.06)",
       }}
       onFocus={e => e.target.style.borderColor = error ? T.red : T.accent}
       onBlur={e  => e.target.style.borderColor = error ? T.red : T.border2}
@@ -136,7 +136,7 @@ const Input = ({ label, type="text", value, onChange, error, placeholder, autoFo
 );
 
 const Card = ({ children, style={} }) => (
-  <div style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:12, padding:20, ...style }}>
+  <div style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:12, padding:20, boxShadow:"0 1px 4px rgba(0,0,0,0.06)", ...style }}>
     {children}
   </div>
 );
@@ -153,7 +153,7 @@ const Tag = ({ children, color=T.accent }) => (
 const CTip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div style={{ background:"#0a0a14", border:`1px solid ${T.border2}`, borderRadius:8, padding:"8px 14px", fontSize:11, fontFamily:"'Syne',sans-serif" }}>
+    <div style={{ background:T.surface, border:`1px solid ${T.border2}`, borderRadius:8, padding:"8px 14px", fontSize:11, fontFamily:"'Syne',sans-serif", boxShadow:"0 4px 12px rgba(0,0,0,0.1)" }}>
       <div style={{ color:T.muted, marginBottom:4 }}>{label}</div>
       {payload.map((p,i) => <div key={i} style={{ color:p.color||T.text }}>{p.name}: {Math.abs(Number(p.value)) > 100 ? inr(p.value) : `${p.value}%`}</div>)}
     </div>
@@ -196,9 +196,9 @@ function LoginScreen({ onLogin }) {
       <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
       {/* bg grid */}
-      <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.4 }} />
+      <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.7 }} />
       {/* glow */}
-      <div style={{ position:"fixed", top:"20%", left:"50%", transform:"translateX(-50%)", width:600, height:400, background:`radial-gradient(ellipse, ${T.accent}18 0%, transparent 70%)`, pointerEvents:"none" }} />
+      <div style={{ position:"fixed", top:"20%", left:"50%", transform:"translateX(-50%)", width:600, height:400, background:`radial-gradient(ellipse, ${T.accent}12 0%, transparent 70%)`, pointerEvents:"none" }} />
 
       <div style={{ position:"relative", width:420, zIndex:1 }}>
         {/* logo */}
@@ -221,12 +221,12 @@ function LoginScreen({ onLogin }) {
             {loading ? `Authenticating${".".repeat(dots)}` : "Sign In →"}
           </Btn>
 
-          <div style={{ textAlign:"center", marginTop:20, fontSize:11, color:T.dim }}>
+          <div style={{ textAlign:"center", marginTop:20, fontSize:11, color:T.muted }}>
             No account needed · Just sign in with any password
           </div>
         </Card>
 
-        <div style={{ textAlign:"center", marginTop:24, fontSize:11, color:T.dim, letterSpacing:1 }}>
+        <div style={{ textAlign:"center", marginTop:24, fontSize:11, color:T.muted, letterSpacing:1 }}>
           FINSTACK v2.0 · Portfolio Analytics
         </div>
       </div>
@@ -277,7 +277,7 @@ function UploadScreen({ userEmail, onParsed, onLogout }) {
   return (
     <div style={{ minHeight:"100vh", background:T.bg, fontFamily:"'Syne',sans-serif", position:"relative" }}>
       <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-      <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.3 }} />
+      <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.6 }} />
 
       {/* nav */}
       <div style={{ position:"relative", zIndex:1, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 32px", borderBottom:`1px solid ${T.border}`, background:`${T.bg}cc`, backdropFilter:"blur(12px)" }}>
@@ -423,7 +423,7 @@ function ColumnMapper({ parsed, fileName, onMapped, onBack }) {
                   value={userMap[key] ?? ""}
                   onChange={e => setUserMap(p => ({...p, [key]: parseInt(e.target.value)}))}
                   style={{
-                    width:"100%", padding:"10px 14px", background:"#0a0a14",
+                    width:"100%", padding:"10px 14px", background:T.surface,
                     border:`1px solid ${key in userMap ? T.green : T.border2}`,
                     borderRadius:8, color: key in userMap ? T.text : T.muted,
                     fontSize:13, outline:"none", fontFamily:"'Syne',sans-serif", cursor:"pointer",
@@ -508,14 +508,53 @@ function Dashboard({ stocks: rawStocks, extraCols: rawExtra, userEmail, fileName
   });
   const hs = (key) => setSort(s => ({key, dir: s.key===key ? -s.dir : -1}));
 
-  const TABS = ["overview","holdings","analytics","risk"];
+  const TABS = ["overview","holdings","analytics","risk","resources","about"];
+
+  // ── smart insights from portfolio data ──────────────────────────────────────
+  const insights = (() => {
+    if (!stocks.length) return [];
+    const out = [];
+    const avgReturn = stocks.reduce((s,r)=>s+r.gainPct,0)/stocks.length;
+    const topStock  = [...stocks].sort((a,b)=>b.gainPct-a.gainPct)[0];
+    const botStock  = [...stocks].sort((a,b)=>a.gainPct-b.gainPct)[0];
+    const bigWeight = topHeavy[0];
+    const profitCount = stocks.filter(s=>s.gain>0).length;
+    if (bigWeight?.allocation > 25) out.push({ icon:"⚠️", color:T.red,    text:`${bigWeight.name} makes up ${bigWeight.allocation}% of your portfolio — consider rebalancing to reduce concentration risk.` });
+    if (avgReturn < 0)               out.push({ icon:"📉", color:T.red,    text:`Your average return is ${pct(avgReturn)}. More than half your holdings are underwater.` });
+    if (avgReturn > 15)              out.push({ icon:"🚀", color:T.green,  text:`Strong portfolio! Average return of ${pct(avgReturn)} across all holdings.` });
+    if (topStock)                    out.push({ icon:"🏆", color:T.green,  text:`Best performer: ${topStock.name} at ${pct(topStock.gainPct)} return on ₹${topStock.invAmt.toLocaleString("en-IN")} invested.` });
+    if (botStock?.gainPct < -30)     out.push({ icon:"🔴", color:T.red,    text:`${botStock.name} is down ${pct(botStock.gainPct)}. Review if it still fits your thesis.` });
+    if (profitCount === stocks.length) out.push({ icon:"✨", color:T.accent, text:`All ${stocks.length} holdings are in profit. Impressive portfolio management!` });
+    if (stocks.length < 5)           out.push({ icon:"💡", color:T.yellow, text:`You hold only ${stocks.length} stocks. Diversifying across more sectors can reduce risk.` });
+    if (stocks.length > 20)          out.push({ icon:"📊", color:T.muted,  text:`With ${stocks.length} holdings, tracking individual positions gets harder. Consider consolidating your best ideas.` });
+    return out.slice(0, 4);
+  })();
 
   return (
     <div style={{ minHeight:"100vh", background:T.bg, color:T.text, fontFamily:"'Syne',sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
+      {/* ── TICKER BAR ── */}
+      <div style={{ background:T.accent, padding:"6px 28px", display:"flex", gap:32, alignItems:"center", overflowX:"auto" }}>
+        {[
+          { label:"NIFTY 50",   value:"22,502.00", chg:"+0.43%" },
+          { label:"SENSEX",     value:"74,119.02", chg:"+0.38%" },
+          { label:"NIFTY BANK", value:"48,201.35", chg:"-0.12%" },
+          { label:"GOLD",       value:"₹72,450",   chg:"+0.21%" },
+          { label:"USD/INR",    value:"83.42",      chg:"-0.05%" },
+          { label:"CRUDE OIL",  value:"$82.10",     chg:"+0.67%" },
+        ].map(m => (
+          <div key={m.label} style={{ display:"flex", gap:8, alignItems:"center", whiteSpace:"nowrap", fontSize:11 }}>
+            <span style={{ color:"rgba(255,255,255,0.65)", letterSpacing:1 }}>{m.label}</span>
+            <span style={{ color:"#fff", fontWeight:700 }}>{m.value}</span>
+            <span style={{ color: m.chg.startsWith("+") ? "#a7f3d0" : "#fca5a5", fontSize:10 }}>{m.chg}</span>
+          </div>
+        ))}
+        <div style={{ marginLeft:"auto", fontSize:9, color:"rgba(255,255,255,0.4)", whiteSpace:"nowrap" }}>INDICATIVE · NOT LIVE</div>
+      </div>
+
       {/* NAV */}
-      <div style={{ background:`${T.bg}ee`, borderBottom:`1px solid ${T.border}`, padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:20, backdropFilter:"blur(12px)" }}>
+      <div style={{ background:`${T.surface}ee`, borderBottom:`1px solid ${T.border}`, padding:"0 28px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:20, backdropFilter:"blur(12px)" }}>
         <div style={{ display:"flex", alignItems:"center", gap:24 }}>
           <div style={{ display:"flex", alignItems:"center", gap:10, padding:"14px 0" }}>
             <div style={{ width:28, height:28, background:`linear-gradient(135deg,${T.accent},${T.accent2})`, borderRadius:7, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14 }}>📈</div>
@@ -589,7 +628,7 @@ function Dashboard({ stocks: rawStocks, extraCols: rawExtra, userEmail, fileName
                     <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={55} outerRadius={90} paddingAngle={2}>
                       {pieData.map((_,i) => <Cell key={i} fill={PIE_COLORS[i%PIE_COLORS.length]} />)}
                     </Pie>
-                    <Tooltip formatter={v=>inr(v)} contentStyle={{background:"#0a0a14",border:`1px solid ${T.border2}`,borderRadius:8,fontSize:11,fontFamily:"'Syne',sans-serif"}} />
+                    <Tooltip formatter={v=>inr(v)} contentStyle={{background:T.surface,border:`1px solid ${T.border2}`,borderRadius:8,fontSize:11,fontFamily:"'Syne',sans-serif",boxShadow:"0 4px 12px rgba(0,0,0,0.1)"}} />
                   </PieChart>
                 </ResponsiveContainer>
               </Card>
@@ -602,11 +641,28 @@ function Dashboard({ stocks: rawStocks, extraCols: rawExtra, userEmail, fileName
                   <XAxis dataKey="name" tick={{fill:T.muted,fontSize:8}} axisLine={false} tickLine={false} interval={0} angle={-30} textAnchor="end" height={50} />
                   <YAxis tick={{fill:T.muted,fontSize:9}} axisLine={false} tickLine={false} tickFormatter={v=>inr(v)} />
                   <Tooltip content={<CTip />} />
-                  <Bar dataKey="invested" name="Invested" fill={T.dim} radius={[3,3,0,0]} />
+                  <Bar dataKey="invested" name="Invested" fill="#c7d2fe" radius={[3,3,0,0]} />
                   <Bar dataKey="current"  name="Current"  fill={T.accent} radius={[3,3,0,0]} />
                 </BarChart>
               </ResponsiveContainer>
             </Card>
+
+            {/* Smart Insights */}
+            {insights.length > 0 && (
+              <div style={{ marginTop:18 }}>
+                <Card>
+                  <SectionTitle>🧠 Portfolio Insights</SectionTitle>
+                  <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:12 }}>
+                    {insights.map((ins,i) => (
+                      <div key={i} style={{ background:`${ins.color}08`, border:`1px solid ${ins.color}25`, borderRadius:10, padding:"14px 16px", display:"flex", gap:12, alignItems:"flex-start" }}>
+                        <div style={{ fontSize:20, lineHeight:1 }}>{ins.icon}</div>
+                        <div style={{ fontSize:12, color:T.text, lineHeight:1.6 }}>{ins.text}</div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
+            )}
           </div>
         )}
 
@@ -733,7 +789,7 @@ function Dashboard({ stocks: rawStocks, extraCols: rawExtra, userEmail, fileName
                     <Tooltip cursor={{strokeDasharray:"3 3"}} content={({active,payload})=>{
                       if(!active||!payload?.length) return null;
                       const d = payload[0]?.payload;
-                      return <div style={{background:"#0a0a14",border:`1px solid ${T.border2}`,borderRadius:8,padding:"8px 14px",fontSize:11,fontFamily:"'Syne',sans-serif"}}>
+                      return <div style={{background:T.surface,border:`1px solid ${T.border2}`,borderRadius:8,padding:"8px 14px",fontSize:11,fontFamily:"'Syne',sans-serif",boxShadow:"0 4px 12px rgba(0,0,0,0.1)"}}>
                         <div style={{color:T.accent,fontWeight:600}}>{d?.name}</div>
                         <div style={{color:T.muted}}>Invested: {inr(d?.x)}</div>
                         <div style={{color:clr(d?.y)}}>Return: {pct(d?.y)}</div>
@@ -819,7 +875,206 @@ function Dashboard({ stocks: rawStocks, extraCols: rawExtra, userEmail, fileName
           </div>
         )}
 
+        {/* ── RESOURCES TAB ── */}
+        {tab === "resources" && (() => {
+          const RESOURCES = [
+            {
+              category: "📚 Learn & Research",
+              color: T.accent,
+              links: [
+                { name:"Zerodha Varsity",        desc:"Free stock market courses from basics to advanced", url:"https://zerodha.com/varsity/",                         tag:"FREE COURSE" },
+                { name:"Screener.in",            desc:"Screen, analyse and compare Indian stocks",         url:"https://www.screener.in/",                             tag:"SCREENER"    },
+                { name:"TradingView",            desc:"Advanced charts and technical analysis tools",      url:"https://www.tradingview.com/",                         tag:"CHARTS"      },
+                { name:"Moneycontrol",           desc:"News, portfolio tools and Indian market data",      url:"https://www.moneycontrol.com/",                        tag:"NEWS"        },
+              ]
+            },
+            {
+              category: "📰 News & Macro",
+              color: T.yellow,
+              links: [
+                { name:"Economic Times Markets", desc:"Indian market news, earnings and macro coverage",   url:"https://economictimes.indiatimes.com/markets",         tag:"INDIA"       },
+                { name:"Wall Street Journal",    desc:"Global financial news and in-depth analysis",       url:"https://www.wsj.com/",                                 tag:"GLOBAL"      },
+                { name:"Goldman Sachs Insights", desc:"Research reports and macro economic outlooks",      url:"https://www.goldmansachs.com/insights/",               tag:"RESEARCH"    },
+                { name:"Bloomberg Markets",      desc:"Real-time financial data and breaking news",        url:"https://www.bloomberg.com/markets",                    tag:"LIVE"        },
+              ]
+            },
+            {
+              category: "🛠 Tools & Calculators",
+              color: T.green,
+              links: [
+                { name:"Groww Calculators",      desc:"SIP, lumpsum, FD and goal-based calculators",      url:"https://groww.in/calculators",                         tag:"CALC"        },
+                { name:"Value Research",         desc:"Mutual fund ratings, NAV and portfolio analysis",   url:"https://www.valueresearchonline.com/",                 tag:"MF"          },
+                { name:"NSE India",              desc:"Official NSE data, indices and announcements",      url:"https://www.nseindia.com/",                            tag:"OFFICIAL"    },
+                { name:"BSE India",              desc:"Official BSE data, filings and corporate actions",  url:"https://www.bseindia.com/",                            tag:"OFFICIAL"    },
+              ]
+            },
+          ];
+
+          return (
+            <div>
+              <div style={{ marginBottom:28 }}>
+                <div style={{ fontSize:22, fontWeight:800, color:T.text, marginBottom:6 }}>Resources</div>
+                <div style={{ fontSize:13, color:T.muted }}>Handpicked tools, courses and news to level up your investing game.</div>
+              </div>
+
+              <div style={{ display:"flex", flexDirection:"column", gap:28 }}>
+                {RESOURCES.map(section => (
+                  <div key={section.category}>
+                    <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+                      <div style={{ width:3, height:18, background:section.color, borderRadius:2 }} />
+                      <div style={{ fontSize:13, fontWeight:700, color:T.text }}>{section.category}</div>
+                    </div>
+                    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))", gap:12 }}>
+                      {section.links.map(link => (
+                        <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                          <div style={{ background:T.surface, border:`1px solid ${T.border}`, borderRadius:12, padding:"16px 18px", cursor:"pointer", transition:"all 0.18s", boxShadow:"0 1px 4px rgba(0,0,0,0.06)" }}
+                            onMouseEnter={e=>{e.currentTarget.style.borderColor=section.color;e.currentTarget.style.boxShadow=`0 4px 16px ${section.color}25`;e.currentTarget.style.transform="translateY(-2px)";}}
+                            onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.06)";e.currentTarget.style.transform="translateY(0)";}}>
+                            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
+                              <div style={{ fontSize:14, fontWeight:700, color:T.text }}>{link.name}</div>
+                              <span style={{ background:`${section.color}15`, color:section.color, fontSize:9, padding:"3px 8px", borderRadius:20, letterSpacing:1, whiteSpace:"nowrap", marginLeft:8 }}>{link.tag}</span>
+                            </div>
+                            <div style={{ fontSize:12, color:T.muted, lineHeight:1.6 }}>{link.desc}</div>
+                            <div style={{ marginTop:10, fontSize:11, color:section.color, fontWeight:600 }}>Visit →</div>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Footer */}
+              <div style={{ marginTop:48, padding:"24px 0", borderTop:`1px solid ${T.border}`, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:12 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                  <div style={{ width:24, height:24, background:`linear-gradient(135deg,${T.accent},${T.accent2})`, borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", fontSize:12 }}>📈</div>
+                  <span style={{ fontSize:13, fontWeight:800, color:T.text, letterSpacing:1 }}>FINSTACK</span>
+                  <span style={{ fontSize:11, color:T.muted }}>— Your personal portfolio intelligence platform</span>
+                </div>
+                <div style={{ fontSize:11, color:T.muted }}>Built with ♥ · Your data never leaves this device · No tracking</div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* ── ABOUT TAB ── */}
+        {tab === "about" && (
+          <div style={{ maxWidth:720, margin:"0 auto", padding:"16px 0 48px" }}>
+
+            {/* Hero card */}
+            <Card style={{ marginBottom:20, padding:32, background:`linear-gradient(135deg, ${T.accent}08, ${T.accent2}05)`, border:`1px solid ${T.accent}25` }}>
+              <div style={{ display:"flex", alignItems:"center", gap:24, flexWrap:"wrap" }}>
+                <div style={{ width:80, height:80, borderRadius:"50%", background:`linear-gradient(135deg,${T.accent},${T.accent2})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:32, flexShrink:0 }}>
+                  👨‍💻
+                </div>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontSize:24, fontWeight:800, color:T.text, marginBottom:4 }}>Ashwani Tiwari</div>
+                  <div style={{ fontSize:13, color:T.accent, fontWeight:600, marginBottom:8, letterSpacing:0.5 }}>Software Developer · Finance Enthusiast</div>
+                  <div style={{ fontSize:13, color:T.muted, lineHeight:1.7 }}>
+                    Building tools that make personal finance smarter. FINSTACK is an open-source portfolio tracker — no servers, no data collection, everything runs in your browser.
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Links */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:20 }}>
+              <a href="https://www.linkedin.com/in/ashwanitiwari/" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                <Card style={{ padding:"20px 24px", cursor:"pointer", transition:"all 0.18s", border:`1px solid ${T.border}` }}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#0077b5";e.currentTarget.style.boxShadow="0 4px 20px rgba(0,119,181,0.15)";e.currentTarget.style.transform="translateY(-2px)";}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.06)";e.currentTarget.style.transform="translateY(0)";}}>
+                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+                    <div style={{ width:44, height:44, borderRadius:10, background:"#0077b5", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, flexShrink:0 }}>
+                      in
+                    </div>
+                    <div>
+                      <div style={{ fontSize:14, fontWeight:700, color:T.text, marginBottom:3 }}>LinkedIn</div>
+                      <div style={{ fontSize:11, color:T.muted }}>Connect · Professional profile</div>
+                      <div style={{ fontSize:11, color:"#0077b5", marginTop:6, fontWeight:600 }}>View Profile →</div>
+                    </div>
+                  </div>
+                </Card>
+              </a>
+
+              <a href="https://github.com/tiwari-ashwani" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                <Card style={{ padding:"20px 24px", cursor:"pointer", transition:"all 0.18s", border:`1px solid ${T.border}` }}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#333";e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.12)";e.currentTarget.style.transform="translateY(-2px)";}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.06)";e.currentTarget.style.transform="translateY(0)";}}>
+                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+                    <div style={{ width:44, height:44, borderRadius:10, background:"#24292e", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, flexShrink:0 }}>
+                      🐙
+                    </div>
+                    <div>
+                      <div style={{ fontSize:14, fontWeight:700, color:T.text, marginBottom:3 }}>GitHub</div>
+                      <div style={{ fontSize:11, color:T.muted }}>Projects · Open source work</div>
+                      <div style={{ fontSize:11, color:"#24292e", marginTop:6, fontWeight:600 }}>View Repos →</div>
+                    </div>
+                  </div>
+                </Card>
+              </a>
+            </div>
+
+            {/* Services */}
+            <Card style={{ marginBottom:20 }}>
+              <SectionTitle>🛠 Available for</SectionTitle>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:10 }}>
+                {[
+                  { icon:"💻", label:"Web Development",      desc:"React, Node, full-stack apps" },
+                  { icon:"📊", label:"Finance Dashboards",   desc:"Data viz, portfolio tools"    },
+                  { icon:"🔌", label:"API Integrations",     desc:"Third-party services & data"  },
+                  { icon:"🤖", label:"Automation Scripts",   desc:"Workflow & data pipelines"    },
+                ].map(s => (
+                  <div key={s.label} style={{ background:T.bg, borderRadius:10, padding:"14px 16px", border:`1px solid ${T.border}` }}>
+                    <div style={{ fontSize:22, marginBottom:8 }}>{s.icon}</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:T.text, marginBottom:4 }}>{s.label}</div>
+                    <div style={{ fontSize:11, color:T.muted }}>{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* CTA */}
+            <Card style={{ textAlign:"center", padding:"28px 32px", background:`linear-gradient(135deg,${T.accent}08,${T.accent2}05)`, border:`1px solid ${T.accent}20` }}>
+              <div style={{ fontSize:16, fontWeight:700, color:T.text, marginBottom:8 }}>Interested in working together?</div>
+              <div style={{ fontSize:13, color:T.muted, marginBottom:20 }}>Reach out on LinkedIn or check out my work on GitHub.</div>
+              <div style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap" }}>
+                <a href="https://www.linkedin.com/in/ashwanitiwari/" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                  <Btn style={{ background:"#0077b5", boxShadow:"0 4px 14px rgba(0,119,181,0.3)" }}>Connect on LinkedIn</Btn>
+                </a>
+                <a href="https://github.com/tiwari-ashwani" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                  <Btn style={{ background:"#24292e", boxShadow:"0 4px 14px rgba(0,0,0,0.2)" }}>View GitHub</Btn>
+                </a>
+              </div>
+            </Card>
+
+          </div>
+        )}
+
       </div>
+
+      {/* ── GLOBAL FOOTER ── */}
+      <div style={{ borderTop:`1px solid ${T.border}`, background:T.bg, padding:"16px 28px", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+          <div style={{ width:22, height:22, background:`linear-gradient(135deg,${T.accent},${T.accent2})`, borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11 }}>📈</div>
+          <span style={{ fontSize:12, fontWeight:800, color:T.text, letterSpacing:0.8 }}>FINSTACK</span>
+          <span style={{ fontSize:11, color:T.muted }}>· Portfolio Intelligence · &copy; {new Date().getFullYear()}</span>
+        </div>
+        <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+          <span style={{ fontSize:11, color:T.muted }}>Built by</span>
+          <a
+            href="https://about-ashwani.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize:12, fontWeight:700, color:T.accent, textDecoration:"none", display:"flex", alignItems:"center", gap:5, padding:"4px 12px", border:`1px solid ${T.accent}30`, borderRadius:6, background:`${T.accent}08`, transition:"all 0.2s" }}
+            onMouseEnter={e=>{e.currentTarget.style.background=T.accent;e.currentTarget.style.color="#fff";}}
+            onMouseLeave={e=>{e.currentTarget.style.background=`${T.accent}08`;e.currentTarget.style.color=T.accent;}}
+          >
+            Ashwani Tiwari ↗
+          </a>
+          <span style={{ fontSize:10, color:T.muted, letterSpacing:0.5 }}>Data stays on your device · No tracking</span>
+        </div>
+      </div>
+
     </div>
   );
 }
