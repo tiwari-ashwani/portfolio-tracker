@@ -222,8 +222,8 @@ function LoginScreen({ onLogin }) {
           </Btn>
 
           <div style={{ textAlign:"center", marginTop:20, fontSize:11, color:T.muted }}>
-            No account needed · Just sign in with any password
-          </div>
+            No account needed · Just sign in with any email or password
+          </div>  
         </Card>
 
         <div style={{ textAlign:"center", marginTop:24, fontSize:11, color:T.muted, letterSpacing:1 }}>
