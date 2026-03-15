@@ -77,7 +77,7 @@ Supports **extra columns from uploaded files** automatically.
 
 ### Clone repository
 
-git clone https://github.com/yourusername/finstack.git
+https://github.com/tiwari-ashwani/portfolio-tracker.git
 cd finstack
 
 ### Install dependencies
