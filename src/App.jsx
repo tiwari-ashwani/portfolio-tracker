@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import ReactGA from 'react-ga4';
-import PageTracker from './components/PageTracker';
 import { buildStocks } from "./utils/parser";
 import LoginScreen from "./screens/LoginScreen";
 import UploadScreen from "./screens/UploadScreen";
@@ -9,11 +7,6 @@ import Dashboard from "./screens/Dashboard";
 import "./styles/global.css";
 
 export default function App() {
-  // Initialize Google Analytics
-  useEffect(() => {
-    ReactGA.initialize('G-GGC1H1VZ6Z');
-  }, []);
-
   const [screen, setScreen] = useState("login");
   const [userEmail, setUser] = useState("");
   const [parsed, setParsed] = useState(null);
@@ -63,7 +56,6 @@ export default function App() {
   if (screen === "dashboard") return (
     <>
       <Dashboard {...dashboard} userEmail={userEmail} fileName={fileName} onReset={handleReset} onLogout={handleLogout} />
-      <PageTracker />
     </>
   );
 
