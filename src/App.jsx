@@ -1,21 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ReactGA from 'react-ga4';
+import PageTracker from './components/PageTracker';
 import { buildStocks } from "./utils/parser";
-import LoginScreen   from "./screens/LoginScreen";
-import UploadScreen  from "./screens/UploadScreen";
-import ColumnMapper  from "./screens/ColumnMapper";
-import Dashboard     from "./screens/Dashboard";
+import LoginScreen from "./screens/LoginScreen";
+import UploadScreen from "./screens/UploadScreen";
+import ColumnMapper from "./screens/ColumnMapper";
+import Dashboard from "./screens/Dashboard";
 import "./styles/global.css";
 
 export default function App() {
-  const [screen,    setScreen]  = useState("login");
-  const [userEmail, setUser]    = useState("");
-  const [parsed,    setParsed]  = useState(null);
-  const [fileName,  setFile]    = useState("");
-  const [dashboard, setDash]    = useState(null);
+  // Initialize Google Analytics
+  useEffect(() => {
+    ReactGA.initialize('G-GGC1H1VZ6Z');
+  }, []);
 
-  const handleLogin  = (email) => { setUser(email); setScreen("upload"); };
-  const handleLogout = ()      => { setUser(""); setParsed(null); setDash(null); setScreen("login"); };
-  const handleReset  = ()      => { setParsed(null); setDash(null); setScreen("upload"); };
+  const [screen, setScreen] = useState("login");
+  const [userEmail, setUser] = useState("");
+  const [parsed, setParsed] = useState(null);
+  const [fileName, setFile] = useState("");
+  const [dashboard, setDash] = useState(null);
+
+  const handleLogin = (email) => { 
+    setUser(email); 
+    setScreen("upload"); 
+  };
+  
+  const handleLogout = () => { 
+    setUser(""); 
+    setParsed(null); 
+    setDash(null); 
+    setScreen("login"); 
+  };
+  
+  const handleReset = () => { 
+    setParsed(null); 
+    setDash(null); 
+    setScreen("upload"); 
+  };
 
   const handleParsed = (result, fname) => {
     setFile(fname);
@@ -35,9 +56,16 @@ export default function App() {
     setScreen("dashboard");
   };
 
-  if (screen === "login")     return <LoginScreen onLogin={handleLogin} />;
-  if (screen === "upload")    return <UploadScreen userEmail={userEmail} onParsed={handleParsed} onLogout={handleLogout} />;
-  if (screen === "mapper")    return <ColumnMapper parsed={parsed} fileName={fileName} onMapped={handleMapped} onBack={() => setScreen("upload")} />;
-  if (screen === "dashboard") return <Dashboard {...dashboard} userEmail={userEmail} fileName={fileName} onReset={handleReset} onLogout={handleLogout} />;
+  // Render screens
+  if (screen === "login") return <LoginScreen onLogin={handleLogin} />;
+  if (screen === "upload") return <UploadScreen userEmail={userEmail} onParsed={handleParsed} onLogout={handleLogout} />;
+  if (screen === "mapper") return <ColumnMapper parsed={parsed} fileName={fileName} onMapped={handleMapped} onBack={() => setScreen("upload")} />;
+  if (screen === "dashboard") return (
+    <>
+      <Dashboard {...dashboard} userEmail={userEmail} fileName={fileName} onReset={handleReset} onLogout={handleLogout} />
+      <PageTracker />
+    </>
+  );
+
   return null;
 }
