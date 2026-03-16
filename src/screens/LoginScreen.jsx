@@ -131,7 +131,7 @@ export default function LoginScreen({ onLogin }) {
             <div className="login__hint">
               <span style={{ color: T.green }}>✓</span> No backend · no account needed<br />
               <span style={{ color: T.green }}>✓</span> Data stays in your browser only<br />
-              <span style={{ color: T.green }}>✓</span> Any password works (min 4 chars)
+              <span style={{ color: T.green }}>✓</span> Any email/password combination works (min 4 chars)
             </div>
           </Card>
 
