@@ -191,43 +191,86 @@ function LoginScreen({ onLogin }) {
     setTimeout(() => { setLoading(false); onLogin(email); }, 1200);
   };
 
+  const mono = { fontFamily:"'JetBrains Mono',monospace" };
+  const STACK = ["Java 21","Spring Boot 3","React","Node.js","Microservices","Docker","Kubernetes","AWS","PostgreSQL","REST APIs","CI/CD","Git"];
+
   return (
-    <div style={{ minHeight:"100vh", background:T.bg, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Syne',sans-serif", position:"relative", overflow:"hidden" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <div style={{ minHeight:"100vh", background:T.bg, display:"flex", fontFamily:"'Syne',sans-serif", position:"relative", overflow:"hidden" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.6 }} />
+      <div style={{ position:"fixed", top:"30%", left:"30%", width:500, height:400, background:`radial-gradient(ellipse, ${T.accent}0d 0%, transparent 70%)`, pointerEvents:"none" }} />
 
-      {/* bg grid */}
-      <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.7 }} />
-      {/* glow */}
-      <div style={{ position:"fixed", top:"20%", left:"50%", transform:"translateX(-50%)", width:600, height:400, background:`radial-gradient(ellipse, ${T.accent}12 0%, transparent 70%)`, pointerEvents:"none" }} />
-
-      <div style={{ position:"relative", width:420, zIndex:1 }}>
-        {/* logo */}
-        <div style={{ textAlign:"center", marginBottom:48 }}>
-          <div style={{ display:"inline-flex", alignItems:"center", gap:10, marginBottom:16 }}>
-            <div style={{ width:36, height:36, background:`linear-gradient(135deg, ${T.accent}, ${T.accent2})`, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>📈</div>
-            <div style={{ fontSize:20, fontWeight:800, color:T.text, letterSpacing:1 }}>FINSTACK</div>
+      {/* LEFT — developer identity */}
+      <div style={{ flex:"0 0 44%", display:"flex", flexDirection:"column", justifyContent:"center", padding:"56px 52px", position:"relative", zIndex:1, borderRight:`1px solid ${T.border}` }}>
+        <div style={{ marginBottom:32 }}>
+          <div style={{ ...mono, fontSize:9, letterSpacing:4, color:T.accent, textTransform:"uppercase", marginBottom:16 }}>// built by</div>
+          <div style={{ fontSize:26, fontWeight:800, color:T.text, lineHeight:1.2, marginBottom:6 }}>Ashwani Tiwari</div>
+          <div style={{ fontSize:12, color:T.accent, fontWeight:700, letterSpacing:0.8, marginBottom:14 }}>Senior Full Stack Developer · 15 yrs exp</div>
+          <div style={{ fontSize:12, color:T.muted, lineHeight:1.9, maxWidth:300 }}>
+            Based in Amsterdam · Currently at CGI.<br/>
+            Java · Spring Boot · React · Cloud · Microservices.<br/>
+            Building enterprise systems since 2009.
           </div>
-          <div style={{ fontSize:12, color:T.muted, letterSpacing:2, textTransform:"uppercase" }}>Portfolio Intelligence</div>
         </div>
 
-        <Card style={{ padding:36 }}>
-          <div style={{ fontSize:22, fontWeight:700, color:T.text, marginBottom:6 }}>Welcome back</div>
-          <div style={{ fontSize:13, color:T.muted, marginBottom:32 }}>Sign in to your dashboard</div>
+        {/* mini terminal */}
+        <div style={{ background:"#1a1b26", border:`1px solid #2d2f40`, borderRadius:10, padding:"14px 18px", marginBottom:24, ...mono }}>
+          <div style={{ display:"flex", gap:5, marginBottom:10 }}>
+            {["#ff5f57","#febc2e","#28c840"].map(c=><div key={c} style={{ width:9, height:9, borderRadius:"50%", background:c }} />)}
+          </div>
+          <div style={{ fontSize:11, lineHeight:2 }}>
+            <div><span style={{ color:"#6272a4" }}>$ </span><span style={{ color:"#f8f8f2" }}>whoami</span></div>
+            <div style={{ color:"#50fa7b" }}>ashwani.tiwari · CGI Amsterdam</div>
+            <div style={{ marginTop:4 }}><span style={{ color:"#6272a4" }}>$ </span><span style={{ color:"#f8f8f2" }}>experience --years</span></div>
+            <div style={{ color:"#bd93f9" }}>15 yrs · enterprise full-stack</div>
+            <div style={{ marginTop:4 }}><span style={{ color:"#6272a4" }}>$ </span><span style={{ color:"#f8f8f2" }}>git log --oneline -1</span></div>
+            <div style={{ color:"#f1fa8c" }}>a4f2c1e build: FINSTACK portfolio tracker{".".repeat(dots)}</div>
+          </div>
+        </div>
 
-          <Input label="Email" type="email" value={email} onChange={v=>{setEmail(v);setErrors(p=>({...p,email:""}))}} error={errors.email} placeholder="you@example.com" autoFocus />
-          <Input label="Password" type="password" value={password} onChange={v=>{setPassword(v);setErrors(p=>({...p,password:""}))}} error={errors.password} placeholder="••••••••" />
+        {/* tech stack pills */}
+        <div style={{ ...mono, fontSize:9, letterSpacing:3, color:T.muted, textTransform:"uppercase", marginBottom:10 }}>// stack</div>
+        <div style={{ display:"flex", flexWrap:"wrap", gap:5, marginBottom:32 }}>
+          {STACK.map(s=>(
+            <span key={s} style={{ fontSize:10, fontWeight:600, padding:"3px 8px", border:`1px solid ${T.border2}`, borderRadius:4, color:T.muted, background:T.surface }}>{s}</span>
+          ))}
+        </div>
 
-          <Btn onClick={submit} disabled={loading} style={{ width:"100%", padding:"13px", fontSize:14, marginTop:8 }}>
-            {loading ? `Authenticating${".".repeat(dots)}` : "Sign In →"}
-          </Btn>
+        <a href="https://about-ashwani.vercel.app/" target="_blank" rel="noopener noreferrer"
+          style={{ ...mono, fontSize:11, color:T.accent, textDecoration:"none", fontWeight:500, letterSpacing:0.3 }}>
+          about-ashwani.vercel.app ↗
+        </a>
+      </div>
 
-          <div style={{ textAlign:"center", marginTop:20, fontSize:11, color:T.muted }}>
-            No account needed · Just sign in with any email or password
-          </div>  
-        </Card>
+      {/* RIGHT — login form */}
+      <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:48, position:"relative", zIndex:1 }}>
+        <div style={{ width:"100%", maxWidth:360 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:36 }}>
+            <div style={{ width:32, height:32, background:`linear-gradient(135deg,${T.accent},${T.accent2})`, borderRadius:8, display:"flex", alignItems:"center", justifyContent:"center", fontSize:15 }}>📈</div>
+            <div style={{ fontSize:17, fontWeight:800, color:T.text, letterSpacing:1 }}>FINSTACK</div>
+          </div>
 
-        <div style={{ textAlign:"center", marginTop:24, fontSize:11, color:T.muted, letterSpacing:1 }}>
-          FINSTACK v2.0 · Portfolio Analytics
+          <div style={{ fontSize:20, fontWeight:700, color:T.text, marginBottom:4 }}>Sign in</div>
+          <div style={{ fontSize:12, color:T.muted, marginBottom:28 }}>Access your portfolio intelligence dashboard</div>
+
+          <Card style={{ padding:28 }}>
+            <Input label="Email" type="email" value={email} onChange={v=>{setEmail(v);setErrors(p=>({...p,email:""}))}} error={errors.email} placeholder="you@example.com" autoFocus />
+            <Input label="Password" type="password" value={password} onChange={v=>{setPassword(v);setErrors(p=>({...p,password:""}))}} error={errors.password} placeholder="min. 4 characters" />
+
+            <Btn onClick={submit} disabled={loading} style={{ width:"100%", padding:"12px", fontSize:13, marginTop:8 }}>
+              {loading ? `Authenticating${".".repeat(dots)}` : "Access Dashboard →"}
+            </Btn>
+
+            <div style={{ marginTop:18, padding:"12px 14px", background:`${T.accent}06`, border:`1px solid ${T.accent}15`, borderRadius:8, ...mono, fontSize:10, color:T.muted, lineHeight:1.9 }}>
+              <span style={{ color:T.green }}>✓</span> No backend · no account needed<br/>
+              <span style={{ color:T.green }}>✓</span> Data stays in your browser only<br/>
+              <span style={{ color:T.green }}>✓</span> Any password works (min 4 chars)
+            </div>
+          </Card>
+
+          <div style={{ textAlign:"center", marginTop:18, ...mono, fontSize:10, color:T.muted, letterSpacing:0.5 }}>
+            FINSTACK v2.0 · React · SheetJS · Recharts
+          </div>
         </div>
       </div>
     </div>
@@ -276,26 +319,27 @@ function UploadScreen({ userEmail, onParsed, onLogout }) {
 
   return (
     <div style={{ minHeight:"100vh", background:T.bg, fontFamily:"'Syne',sans-serif", position:"relative" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
       <div style={{ position:"fixed", inset:0, backgroundImage:`linear-gradient(${T.border} 1px, transparent 1px), linear-gradient(90deg, ${T.border} 1px, transparent 1px)`, backgroundSize:"40px 40px", opacity:0.6 }} />
 
       {/* nav */}
       <div style={{ position:"relative", zIndex:1, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"16px 32px", borderBottom:`1px solid ${T.border}`, background:`${T.bg}cc`, backdropFilter:"blur(12px)" }}>
         <div style={{ display:"flex", alignItems:"center", gap:10 }}>
           <div style={{ width:28, height:28, background:`linear-gradient(135deg,${T.accent},${T.accent2})`, borderRadius:7, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14 }}>📈</div>
-          <span style={{ fontSize:16, fontWeight:800, color:T.text, letterSpacing:1 }}>FINSTACK</span>
+          <span style={{ fontSize:15, fontWeight:800, color:T.text, letterSpacing:1 }}>FINSTACK</span>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:16 }}>
-          <div style={{ fontSize:12, color:T.muted }}>{userEmail}</div>
+          <div style={{ fontSize:11, color:T.muted, fontFamily:"'JetBrains Mono',monospace" }}>{userEmail}</div>
           <Btn onClick={onLogout} variant="ghost" style={{ padding:"6px 14px", fontSize:11 }}>Sign out</Btn>
         </div>
       </div>
 
       <div style={{ position:"relative", zIndex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", minHeight:"calc(100vh - 64px)", padding:32 }}>
-        <div style={{ textAlign:"center", marginBottom:48 }}>
-          <div style={{ fontSize:10, letterSpacing:4, color:T.accent, textTransform:"uppercase", marginBottom:12 }}>Step 1 of 1</div>
-          <div style={{ fontSize:28, fontWeight:800, color:T.text }}>Upload your holdings</div>
-          <div style={{ fontSize:13, color:T.muted, marginTop:8 }}>Import your portfolio from Excel or CSV</div>
+
+        <div style={{ textAlign:"center", marginBottom:36 }}>
+          <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:9, letterSpacing:4, color:T.accent, textTransform:"uppercase", marginBottom:12 }}>// step_01 · data_ingestion</div>
+          <div style={{ fontSize:24, fontWeight:800, color:T.text }}>Import Portfolio Holdings</div>
+          <div style={{ fontSize:12, color:T.muted, marginTop:8 }}>Supports Zerodha, Groww, and any broker export — CSV or Excel</div>
         </div>
 
         <div
@@ -304,37 +348,40 @@ function UploadScreen({ userEmail, onParsed, onLogout }) {
           onDrop={onDrop}
           onClick={()=>inputRef.current.click()}
           style={{
-            width:460, padding:"56px 40px", borderRadius:16, cursor:"pointer", textAlign:"center",
+            width:460, padding:"48px 40px", borderRadius:14, cursor:"pointer", textAlign:"center",
             border:`2px dashed ${dragging ? T.accent : T.border2}`,
-            background: dragging ? `${T.accent}08` : T.surface,
+            background: dragging ? `${T.accent}07` : T.surface,
             transition:"all 0.2s",
-            boxShadow: dragging ? `0 0 40px ${T.accent}18` : "none",
+            boxShadow: dragging ? `0 0 32px ${T.accent}14` : "0 1px 4px rgba(0,0,0,0.06)",
           }}>
-          <div style={{ fontSize:40, marginBottom:16 }}>{loading ? "⏳" : "📂"}</div>
-          <div style={{ color:T.text, fontSize:14, fontWeight:600, marginBottom:6 }}>
-            {loading ? "Parsing your file…" : "Drop your file here"}
+          <div style={{ fontSize:32, marginBottom:12 }}>{loading ? "⚙️" : "📂"}</div>
+          <div style={{ color:T.text, fontSize:14, fontWeight:700, marginBottom:4 }}>
+            {loading ? "Parsing file…" : "Drop your holdings file here"}
           </div>
-          <div style={{ color:T.muted, fontSize:12, marginBottom:20 }}>or click to browse</div>
+          <div style={{ fontFamily:"'JetBrains Mono',monospace", color:T.muted, fontSize:11, marginBottom:18 }}>
+            {loading ? "running column detection…" : "or click to browse · zero uploads · client-side only"}
+          </div>
           <div style={{ display:"flex", gap:8, justifyContent:"center" }}>
-            {["XLSX","XLS","CSV"].map(f => <Tag key={f}>{f}</Tag>)}
+            {["XLSX","XLS","CSV"].map(f=><Tag key={f}>{f}</Tag>)}
           </div>
           <input ref={inputRef} type="file" accept=".xlsx,.xls,.csv" style={{display:"none"}} onChange={e=>handle(e.target.files[0])} />
         </div>
 
         {error && (
-          <div style={{ marginTop:20, background:"rgba(248,113,113,0.07)", border:`1px solid rgba(248,113,113,0.25)`, borderRadius:8, padding:"10px 20px", color:T.red, fontSize:12, maxWidth:460, textAlign:"center" }}>
+          <div style={{ marginTop:16, background:"rgba(220,38,38,0.05)", border:`1px solid rgba(220,38,38,0.2)`, borderRadius:8, padding:"10px 20px", color:T.red, fontSize:11, maxWidth:460, textAlign:"center", fontFamily:"'JetBrains Mono',monospace" }}>
             ⚠ {error}
           </div>
         )}
 
-        <div style={{ marginTop:40, maxWidth:460, textAlign:"center" }}>
-          <SectionTitle>Required column names in your file</SectionTitle>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:8, justifyContent:"center" }}>
-            {Object.values(MANDATORY).map(m => <Tag key={m.label} color={T.accent}>{m.label}</Tag>)}
+        <div style={{ marginTop:28, width:460, background:T.surface, border:`1px solid ${T.border}`, borderRadius:12, padding:"18px 22px", boxShadow:"0 1px 4px rgba(0,0,0,0.05)" }}>
+          <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:9, letterSpacing:3, color:T.muted, textTransform:"uppercase", marginBottom:12 }}>// required_columns</div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:7, marginBottom:14 }}>
+            {Object.values(MANDATORY).map(m=><Tag key={m.label} color={T.accent}>{m.label}</Tag>)}
           </div>
-          <div style={{ fontSize:11, color:T.dim, marginTop:12, lineHeight:1.9 }}>
-            Missing columns? Don't worry — we'll let you map them manually.<br/>
-            Extra columns will appear as-is in your dashboard.
+          <div style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:11, color:T.muted, lineHeight:2 }}>
+            <span style={{ color:T.green }}>✓</span> Missing columns? Manual mapper runs automatically<br/>
+            <span style={{ color:T.green }}>✓</span> Extra columns pass through to dashboard as-is<br/>
+            <span style={{ color:T.green }}>✓</span> Zerodha wrapped-CSV format supported
           </div>
         </div>
       </div>
@@ -958,97 +1005,140 @@ function Dashboard({ stocks: rawStocks, extraCols: rawExtra, userEmail, fileName
         })()}
 
         {/* ── ABOUT TAB ── */}
-        {tab === "about" && (
-          <div style={{ maxWidth:720, margin:"0 auto", padding:"16px 0 48px" }}>
+        {tab === "about" && (() => {
+          const mono = { fontFamily:"'JetBrains Mono',monospace" };
+          const career = [
+            { co:"CGI",       loc:"Amsterdam, NL", role:"Senior Full Stack Developer", period:"2019 – Present", active:true  },
+            { co:"LTI",       loc:"India",         role:"Full Stack Developer",         period:"2015 – 2019",   active:false },
+            { co:"Cognizant", loc:"India",         role:"Software Engineer",            period:"2013 – 2015",   active:false },
+            { co:"Capgemini", loc:"India",         role:"Software Engineer",            period:"2011 – 2013",   active:false },
+            { co:"Infosys",   loc:"India",         role:"Software Engineer",            period:"2009 – 2011",   active:false },
+          ];
+          return (
+          <div style={{ maxWidth:740, margin:"0 auto", padding:"16px 0 56px" }}>
 
-            {/* Hero card */}
-            <Card style={{ marginBottom:20, padding:32, background:`linear-gradient(135deg, ${T.accent}08, ${T.accent2}05)`, border:`1px solid ${T.accent}25` }}>
-              <div style={{ display:"flex", alignItems:"center", gap:24, flexWrap:"wrap" }}>
-                <div style={{ width:80, height:80, borderRadius:"50%", background:`linear-gradient(135deg,${T.accent},${T.accent2})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:32, flexShrink:0 }}>
-                  👨‍💻
-                </div>
-                <div style={{ flex:1 }}>
-                  <div style={{ fontSize:24, fontWeight:800, color:T.text, marginBottom:4 }}>Ashwani Tiwari</div>
-                  <div style={{ fontSize:13, color:T.accent, fontWeight:600, marginBottom:8, letterSpacing:0.5 }}>Software Developer · Finance Enthusiast</div>
-                  <div style={{ fontSize:13, color:T.muted, lineHeight:1.7 }}>
-                    Building tools that make personal finance smarter. FINSTACK is an open-source portfolio tracker — no servers, no data collection, everything runs in your browser.
+            {/* ── Hero ── */}
+            <Card style={{ marginBottom:16, padding:"26px 28px", background:`linear-gradient(135deg,${T.accent}07,${T.accent2}04)`, border:`1px solid ${T.accent}1a` }}>
+              <div style={{ display:"flex", alignItems:"flex-start", gap:24, flexWrap:"wrap" }}>
+                <div style={{ width:66, height:66, borderRadius:14, background:`linear-gradient(135deg,${T.accent},${T.accent2})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:26, flexShrink:0 }}>👨‍💻</div>
+                <div style={{ flex:1, minWidth:200 }}>
+                  <div style={{ fontSize:20, fontWeight:800, color:T.text, marginBottom:2 }}>Ashwani Tiwari</div>
+                  <div style={{ fontSize:11, fontWeight:700, color:T.accent, letterSpacing:1.2, textTransform:"uppercase", marginBottom:10 }}>Senior Full Stack Developer · 15 Years</div>
+                  <div style={{ fontSize:12, color:T.muted, lineHeight:1.85, maxWidth:460 }}>
+                    Based in Amsterdam. Currently building enterprise systems at CGI. Java · Spring Boot · React · Microservices · Cloud.
+                    FINSTACK is a personal side project — zero backend, client-side only, built in React.
+                  </div>
+                  <div style={{ display:"flex", gap:6, marginTop:12, flexWrap:"wrap" }}>
+                    {["CGI · Amsterdam","Java 21","Spring Boot 3","React","Microservices","Docker","AWS","PostgreSQL"].map(t=>(
+                      <span key={t} style={{ fontSize:10, fontWeight:600, padding:"3px 8px", border:`1px solid ${T.border2}`, borderRadius:4, color:T.muted, background:T.surface }}>{t}</span>
+                    ))}
                   </div>
                 </div>
               </div>
             </Card>
 
-            {/* Links */}
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14, marginBottom:20 }}>
-              <a href="https://www.linkedin.com/in/ashwanitiwari/" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                <Card style={{ padding:"20px 24px", cursor:"pointer", transition:"all 0.18s", border:`1px solid ${T.border}` }}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#0077b5";e.currentTarget.style.boxShadow="0 4px 20px rgba(0,119,181,0.15)";e.currentTarget.style.transform="translateY(-2px)";}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.06)";e.currentTarget.style.transform="translateY(0)";}}>
-                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-                    <div style={{ width:44, height:44, borderRadius:10, background:"#0077b5", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, flexShrink:0 }}>
-                      in
+            {/* ── Career Timeline ── */}
+            <Card style={{ marginBottom:16 }}>
+              <SectionTitle>// career_timeline</SectionTitle>
+              <div style={{ display:"flex", flexDirection:"column" }}>
+                {career.map((e,i)=>(
+                  <div key={e.co} style={{ display:"flex", gap:14, paddingBottom: i<career.length-1 ? 18 : 0 }}>
+                    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", flexShrink:0, width:14 }}>
+                      <div style={{ width:10, height:10, borderRadius:"50%", background: e.active ? T.accent : T.border2, border:`2px solid ${e.active ? T.accent : T.border2}`, marginTop:3, flexShrink:0 }} />
+                      {i < career.length-1 && <div style={{ width:1, flex:1, background:T.border, marginTop:3 }} />}
                     </div>
-                    <div>
-                      <div style={{ fontSize:14, fontWeight:700, color:T.text, marginBottom:3 }}>LinkedIn</div>
-                      <div style={{ fontSize:11, color:T.muted }}>Connect · Professional profile</div>
-                      <div style={{ fontSize:11, color:"#0077b5", marginTop:6, fontWeight:600 }}>View Profile →</div>
+                    <div style={{ flex:1 }}>
+                      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", flexWrap:"wrap", gap:6 }}>
+                        <div style={{ fontSize:13, fontWeight:700, color:T.text }}>{e.co} <span style={{ fontSize:11, fontWeight:400, color:T.muted }}>· {e.loc}</span></div>
+                        <span style={{ ...mono, fontSize:10, fontWeight:600, color: e.active ? T.accent : T.muted, background: e.active ? `${T.accent}0e` : T.bg, padding:"2px 9px", borderRadius:20 }}>{e.period}</span>
+                      </div>
+                      <div style={{ fontSize:11, color:T.muted, marginTop:1 }}>{e.role}</div>
                     </div>
-                  </div>
-                </Card>
-              </a>
-
-              <a href="https://github.com/tiwari-ashwani" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                <Card style={{ padding:"20px 24px", cursor:"pointer", transition:"all 0.18s", border:`1px solid ${T.border}` }}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor="#333";e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.12)";e.currentTarget.style.transform="translateY(-2px)";}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor=T.border;e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.06)";e.currentTarget.style.transform="translateY(0)";}}>
-                  <div style={{ display:"flex", alignItems:"center", gap:14 }}>
-                    <div style={{ width:44, height:44, borderRadius:10, background:"#24292e", display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, flexShrink:0 }}>
-                      🐙
-                    </div>
-                    <div>
-                      <div style={{ fontSize:14, fontWeight:700, color:T.text, marginBottom:3 }}>GitHub</div>
-                      <div style={{ fontSize:11, color:T.muted }}>Projects · Open source work</div>
-                      <div style={{ fontSize:11, color:"#24292e", marginTop:6, fontWeight:600 }}>View Repos →</div>
-                    </div>
-                  </div>
-                </Card>
-              </a>
-            </div>
-
-            {/* Services */}
-            <Card style={{ marginBottom:20 }}>
-              <SectionTitle>🛠 Available for</SectionTitle>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))", gap:10 }}>
-                {[
-                  { icon:"💻", label:"Web Development",      desc:"React, Node, full-stack apps" },
-                  { icon:"📊", label:"Finance Dashboards",   desc:"Data viz, portfolio tools"    },
-                  { icon:"🔌", label:"API Integrations",     desc:"Third-party services & data"  },
-                  { icon:"🤖", label:"Automation Scripts",   desc:"Workflow & data pipelines"    },
-                ].map(s => (
-                  <div key={s.label} style={{ background:T.bg, borderRadius:10, padding:"14px 16px", border:`1px solid ${T.border}` }}>
-                    <div style={{ fontSize:22, marginBottom:8 }}>{s.icon}</div>
-                    <div style={{ fontSize:13, fontWeight:700, color:T.text, marginBottom:4 }}>{s.label}</div>
-                    <div style={{ fontSize:11, color:T.muted }}>{s.desc}</div>
                   </div>
                 ))}
               </div>
             </Card>
 
-            {/* CTA */}
-            <Card style={{ textAlign:"center", padding:"28px 32px", background:`linear-gradient(135deg,${T.accent}08,${T.accent2}05)`, border:`1px solid ${T.accent}20` }}>
-              <div style={{ fontSize:16, fontWeight:700, color:T.text, marginBottom:8 }}>Interested in working together?</div>
-              <div style={{ fontSize:13, color:T.muted, marginBottom:20 }}>Reach out on LinkedIn or check out my work on GitHub.</div>
-              <div style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap" }}>
+            {/* ── Links row ── */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:12, marginBottom:16 }}>
+              {[
+                { label:"Portfolio",  sub:"Projects & profile",    url:"https://about-ashwani.vercel.app/",            icon:"🌐", bg:T.accent  },
+                { label:"LinkedIn",   sub:"Connect professionally", url:"https://www.linkedin.com/in/ashwanitiwari/",  icon:"in", bg:"#0077b5" },
+                { label:"GitHub",     sub:"Code & open source",    url:"https://github.com/tiwari-ashwani",            icon:"🐙", bg:"#24292e" },
+              ].map(l=>(
+                <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                  <Card style={{ padding:"16px 18px", cursor:"pointer", transition:"all 0.18s" }}
+                    onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-2px)";e.currentTarget.style.boxShadow=`0 6px 20px rgba(0,0,0,0.09)`;}}
+                    onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.06)";}}>
+                    <div style={{ width:34, height:34, borderRadius:8, background:l.bg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:13, color:"#fff", fontWeight:800, marginBottom:10 }}>{l.icon}</div>
+                    <div style={{ fontSize:13, fontWeight:700, color:T.text, marginBottom:2 }}>{l.label} ↗</div>
+                    <div style={{ fontSize:11, color:T.muted }}>{l.sub}</div>
+                  </Card>
+                </a>
+              ))}
+            </div>
+
+            {/* ── Available for ── */}
+            <Card style={{ marginBottom:16 }}>
+              <SectionTitle>// available_for</SectionTitle>
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(155px,1fr))", gap:10 }}>
+                {[
+                  { icon:"☕", label:"Java / Spring Boot",  desc:"Enterprise APIs, JPA, microservices" },
+                  { icon:"⚛️", label:"React / Node.js",     desc:"Full-stack web apps & dashboards"    },
+                  { icon:"🐳", label:"DevOps / Cloud",      desc:"Docker, K8s, AWS, CI/CD"             },
+                  { icon:"📊", label:"Finance Tools",       desc:"Data viz, portfolio analytics"       },
+                ].map(s=>(
+                  <div key={s.label} style={{ background:T.bg, borderRadius:9, padding:"14px 15px", border:`1px solid ${T.border}` }}>
+                    <div style={{ fontSize:18, marginBottom:8 }}>{s.icon}</div>
+                    <div style={{ fontSize:12, fontWeight:700, color:T.text, marginBottom:3 }}>{s.label}</div>
+                    <div style={{ fontSize:11, color:T.muted, lineHeight:1.6 }}>{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* ── FINSTACK tech manifest ── */}
+            <Card style={{ marginBottom:16, padding:"18px 22px" }}>
+              <SectionTitle>// finstack.config</SectionTitle>
+              <div style={{ ...mono, fontSize:11, lineHeight:2.1 }}>
+                {[
+                  ["framework",    "React 18 + Vite"],
+                  ["charts",       "Recharts"],
+                  ["file_parser",  "SheetJS (xlsx)"],
+                  ["deployment",   "Vercel (static)"],
+                  ["data_storage", "none · client-side only"],
+                  ["backend",      "none · zero server calls"],
+                  ["tracking",     "none · your data stays local"],
+                ].map(([k,v])=>(
+                  <div key={k} style={{ display:"flex", gap:8 }}>
+                    <span style={{ color:T.accent2, minWidth:116 }}>{k}</span>
+                    <span style={{ color:T.muted }}>:</span>
+                    <span style={{ color:T.text }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* ── CTA ── */}
+            <Card style={{ textAlign:"center", padding:"22px 28px", background:`linear-gradient(135deg,${T.accent}07,${T.accent2}04)`, border:`1px solid ${T.accent}18` }}>
+              <div style={{ fontSize:14, fontWeight:700, color:T.text, marginBottom:4 }}>Open to interesting projects</div>
+              <div style={{ fontSize:12, color:T.muted, marginBottom:18 }}>Senior roles · backend architecture · fintech · consulting</div>
+              <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
+                <a href="https://about-ashwani.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
+                  <Btn style={{ fontSize:12, padding:"9px 20px" }}>Visit Portfolio ↗</Btn>
+                </a>
                 <a href="https://www.linkedin.com/in/ashwanitiwari/" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                  <Btn style={{ background:"#0077b5", boxShadow:"0 4px 14px rgba(0,119,181,0.3)" }}>Connect on LinkedIn</Btn>
+                  <Btn style={{ background:"#0077b5", fontSize:12, padding:"9px 20px", boxShadow:"none" }}>LinkedIn ↗</Btn>
                 </a>
                 <a href="https://github.com/tiwari-ashwani" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none" }}>
-                  <Btn style={{ background:"#24292e", boxShadow:"0 4px 14px rgba(0,0,0,0.2)" }}>View GitHub</Btn>
+                  <Btn style={{ background:"#24292e", fontSize:12, padding:"9px 20px", boxShadow:"none" }}>GitHub ↗</Btn>
                 </a>
               </div>
             </Card>
 
           </div>
-        )}
+          );
+        })()}
 
       </div>
 
