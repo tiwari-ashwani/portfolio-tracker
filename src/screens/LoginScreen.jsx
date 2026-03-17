@@ -56,7 +56,7 @@ export default function LoginScreen({ onLogin }) {
           </div>
           <div style={{ fontSize: 12, color: T.muted, lineHeight: 1.9, maxWidth: 300 }}>
             Based in Amsterdam · Currently at CGI.<br />
-            Java · Spring Boot · React · Cloud · Microservices.<br />
+            Java · Spring Boot · Microservices · React · Cloud.<br />
             Building enterprise systems since 2009.
           </div>
         </div>
